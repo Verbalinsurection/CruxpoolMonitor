@@ -7,6 +7,10 @@ class Config():
     def __init__(self):
         self.__cf_wallet = \
             ['WALLET', environ.get('WALLET', None)]
+        self.__cf_coin = \
+            ['COIN', environ.get('COIN', 'eth')]
+        self.__cf_coin_full = \
+            ['COIN_FULL', environ.get('COIN_FULL', 'ethereum')]
         self.__cf_fiat = \
             ['FIAT', environ.get('FIAT', 'usd')]
         self.__cf_theorical_hrate = \
@@ -50,6 +54,14 @@ class Config():
     @property
     def fiat(self):
         return self.__cf_fiat[1]
+
+    @property
+    def coin(self):
+        return self.__cf_coin[1]
+
+    @property
+    def coin_full(self):
+        return self.__cf_coin_full[1]
 
     @property
     def pay_amount(self):
