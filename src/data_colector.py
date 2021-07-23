@@ -10,10 +10,11 @@ from logger import LOG
 class Data():
     __date_time_format = "%Y-%m-%dT%H:%M:%S.%fZ"
 
-    def __init__(self, wallet, fiat_code, theorical, pay_amount):
-        self.__coin_info = CWF.Coin(fiat_code, 'ravencoin')
+    def __init__(self, wallet, fiat_code, theorical,
+                 pay_amount, coin, coin_full):
+        self.__coin_info = CWF.Coin(fiat_code, coin_full)
         self.__pool_info = CF.CruxpoolHelper(
-            'rvn', wallet, theorical, pay_amount)
+            coin, wallet, theorical, pay_amount)
         self.__wallet_info = CWF.RvnWallet(wallet)
         self.__theorical = theorical
         self.__status = {}
