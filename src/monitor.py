@@ -77,7 +77,9 @@ if __name__ == "__main__":
     rvndata = Data(conf.wallet,
                    conf.fiat,
                    conf.theorical_hrate,
-                   conf.pay_amount)
+                   conf.pay_amount,
+                   conf.coin,
+                   conf.coin_full)
     data_process(rvndata, idbc)
 
     schedule.every(conf.schedule_update).seconds.do(data_process,
