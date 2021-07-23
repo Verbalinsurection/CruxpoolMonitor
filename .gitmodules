@@ -1,0 +1,6 @@
+[submodule "src/CruxpoolFetcher"]
+	path = src/CruxpoolFetcher
+	url = https://github.com/Verbalinsurection/CruxpoolFetcher
+[submodule "src/CryptoWalletFetcher"]
+	path = src/CryptoWalletFetcher
+	url = https://github.com/Verbalinsurection/CryptoWalletFetcher
