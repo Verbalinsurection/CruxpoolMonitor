@@ -57,16 +57,12 @@ class Idbc():
             LOG.info('Create daily policy')
             self.__client.create_retention_policy('daily', 'INF', 1)
 
-        cq_gain = 'SELECT (last(unpaid) - min(unpaid))' \
-            ' + ((max(unpaid) - first(unpaid))' \
-            ' * (ceil((last(unpaid) - min(unpaid))' \
-            ' / (max(unpaid) - first(unpaid))) - 1)) AS daily_gain' \
+        cq_gain = 'SELECT amount AS daily_gain' \
             ' INTO ' + self.__db + '.daily.pool' \
-            ' FROM ' + self.__db + '.autogen.pool' \
-            ' GROUP BY time(1d)'
+            ' FROM ' + self.__db + '.autogen.pool'
 
         cq_wallet = 'SELECT max(balance_fiat) AS balance_fiat, ' \
-            'max(balance_eth) AS balance_eth' \
+            'max(balance_crypto) AS balance_crypto' \
             ' INTO ' + self.__db + '.daily.wallet' \
             ' FROM ' + self.__db + '.autogen.wallet' \
             ' GROUP BY time(1d)'

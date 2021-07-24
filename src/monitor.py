@@ -11,7 +11,7 @@ from logger import LOG
 import CruxpoolFetcher as CF
 
 
-__version__ = '1.0.0'
+__version__ = '1.1.0'
 
 
 def data_process(rvndata, idbc):
@@ -40,6 +40,18 @@ def data_process(rvndata, idbc):
 
     LOG.debug('Writing payouts data to InfluxDb')
     if not idbc.write_data(formated_payouts, 'daily'):
+        LOG.error('Error on writing data to InfluxDb')
+        LOG.error(idbc.last_error)
+
+    formated_history = rvndata.formated_history
+    if formated_history is None:
+        LOG.error('No history data for InfluxDb')
+        return
+    for data_line in formated_history:
+        LOG.debug(data_line)
+
+    LOG.debug('Writing history data to InfluxDb')
+    if not idbc.write_data(formated_history, 'daily'):
         LOG.error('Error on writing data to InfluxDb')
         LOG.error(idbc.last_error)
 

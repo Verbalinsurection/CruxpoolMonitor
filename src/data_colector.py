@@ -110,6 +110,18 @@ class Data():
         fields['hrate_3h'] = self.__pool_info.hrate_3h
         fields['hrate_day'] = self.__pool_info.hrate_day
         fields['coin_min'] = self.__pool_info.coin_min
+        fields['crypto_hour'] = self.__pool_info.coin_min * 60
+        fields['fiat_hour'] = self.__pool_info.coin_min * 60 \
+            * self.__coin_info.price
+        fields['crypto_day'] = self.__pool_info.coin_min * 60 * 24
+        fields['fiat_day'] = self.__pool_info.coin_min * 60 * 24 \
+            * self.__coin_info.price
+        fields['crypto_week'] = self.__pool_info.coin_min * 60 * 24 * 7
+        fields['fiat_week'] = self.__pool_info.coin_min * 60 * 24 * 7 \
+            * self.__coin_info.price
+        fields['crypto_month'] = self.__pool_info.coin_min * 60 * 24 * 30
+        fields['fiat_month'] = self.__pool_info.coin_min * 60 * 24 * 30 \
+            * self.__coin_info.price
         fields['earn_hour'] = self.__pool_info.earn_hour
         fields['earn_day'] = self.__pool_info.earn_day
         fields['earn_month'] = self.__pool_info.earn_month
@@ -163,6 +175,20 @@ class Data():
             }
         }
 
+    def __data_history(self, dt_point, history):
+        fields = {}
+        fields['amount'] = history.amount
+
+        return {
+            'measurement': 'history',
+            'time': datetime.isoformat(history.h_date),
+            'fields': fields,
+            'tags': {
+                'wallet': self.__pool_info.wallet,
+                'pool': self.__pool_info.pool_name,
+            }
+        }
+
     @property
     def formated_data(self):
         dt_point = datetime.utcnow().strftime(self.__date_time_format)
@@ -190,6 +216,20 @@ class Data():
         try:
             for payout in self.__pool_info.payouts:
                 data_points.append(self.__data_payout(dt_point, payout))
+        except AttributeError as e:
+            LOG.error('Unable to create data points: ' + str(e))
+            return None
+
+        return data_points
+
+    @property
+    def formated_history(self):
+        dt_point = datetime.utcnow().strftime(self.__date_time_format)
+
+        data_points = []
+        try:
+            for history in self.__pool_info.history:
+                data_points.append(self.__data_history(dt_point, history))
         except AttributeError as e:
             LOG.error('Unable to create data points: ' + str(e))
             return None
