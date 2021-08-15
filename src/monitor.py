@@ -14,8 +14,21 @@ import CruxpoolFetcher as CF
 __version__ = '1.1.0'
 
 
-def data_process(rvndata, idbc):
+def data_process():
     LOG.debug('Starting data process')
+
+    idbc = Idbc(conf.influx_db,
+                conf.influx_host,
+                conf.influx_user,
+                conf.influx_pass,
+                conf.influx_port)
+
+    rvndata = Data(conf.wallet,
+                   conf.fiat,
+                   conf.theorical_hrate,
+                   conf.pay_amount,
+                   conf.coin,
+                   conf.coin_full)
 
     rvndata.update()
 
@@ -76,27 +89,18 @@ if __name__ == "__main__":
                  '\t-> ' + str(confentry[1]).ljust(54) + '║')
     LOG.info('╚' + '═' * 78 + '╝')
 
-    idbc = Idbc(conf.influx_db,
-                conf.influx_host,
-                conf.influx_user,
-                conf.influx_pass,
-                conf.influx_port)
-
     if conf.purge == "PURGE":
         LOG.warning('Purge DB')
+        idbc = Idbc(conf.influx_db,
+                    conf.influx_host,
+                    conf.influx_user,
+                    conf.influx_pass,
+                    conf.influx_port)
         idbc.purge()
 
-    rvndata = Data(conf.wallet,
-                   conf.fiat,
-                   conf.theorical_hrate,
-                   conf.pay_amount,
-                   conf.coin,
-                   conf.coin_full)
-    data_process(rvndata, idbc)
+    data_process()
 
-    schedule.every(conf.schedule_update).seconds.do(data_process,
-                                                    rvndata,
-                                                    idbc)
+    schedule.every(conf.schedule_update).seconds.do(data_process)
 
     while True:
         schedule.run_pending()
