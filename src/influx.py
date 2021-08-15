@@ -87,13 +87,13 @@ class Idbc():
 
                 if cq['name'] == 'downsample_gain' \
                         and cq['query'] != cq_gain_comp:
-                    LOG.info('Modify continuous query for gain')
+                    LOG.debug('Modify continuous query for gain')
                     self.__client.drop_continuous_query('downsample_gain')
                     self.__client.create_continuous_query('downsample_gain',
                                                           cq_gain)
                 elif cq['name'] == 'downsample_wallet' \
                         and cq['query'] != cq_wallet_comp:
-                    LOG.info('Modify continuous query for wallet')
+                    LOG.debug('Modify continuous query for wallet')
                     self.__client.drop_continuous_query('downsample_wallet')
                     self.__client.create_continuous_query('downsample_wallet',
                                                           cq_wallet)
