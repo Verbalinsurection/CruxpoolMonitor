@@ -11,7 +11,7 @@ from logger import LOG
 import CruxpoolFetcher as CF
 
 
-__version__ = '1.1.0'
+__version__ = '1.1.4'
 
 
 def data_process():
