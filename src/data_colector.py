@@ -53,7 +53,7 @@ class Data():
             else:
                 LOG.warning('Update wallet info failed: ' +
                             str(self.__wallet_info.last_error))
-        except AttributeError as e:
+        except (AttributeError, KeyError) as e:
             LOG.warning('Update wallet info failed: ' + str(e))
 
     def __data_status(self, dt_point):

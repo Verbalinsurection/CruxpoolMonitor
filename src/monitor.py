@@ -12,7 +12,7 @@ import CruxpoolFetcher as CF
 import CryptoWalletFetcher as WF
 
 
-__version__ = '1.1.8'
+__version__ = '1.1.9'
 
 
 def data_process():
@@ -80,11 +80,12 @@ if __name__ == "__main__":
 
     title = 'Ravencoin Mining Monitor - ' + __version__
     fetcher_version = '(fetcher version: ' + CF.__version__ + ')'
-    fetcher_version = '(wallet fetcher version: ' + WF.__version__ + ')'
+    wallet_fetcher_version = '(wallet fetcher version: ' + WF.__version__ + ')'
 
     LOG.info('╔' + '═' * 78 + '╗')
     LOG.info('║' + title.center(78, ' ') + '║')
     LOG.info('║' + fetcher_version.center(78, ' ') + '║')
+    LOG.info('║' + wallet_fetcher_version.center(78, ' ') + '║')
     LOG.info('╟' + '─' * 78 + '╢')
     for confentry in conf.conf_array:
         LOG.info('║ ' + confentry[0].ljust(18) +
