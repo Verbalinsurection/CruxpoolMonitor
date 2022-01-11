@@ -12,7 +12,7 @@ import CruxpoolFetcher as CF
 import CryptoWalletFetcher as WF
 
 
-__version__ = '1.1.9'
+__version__ = '1.1.10'
 
 
 def data_process():
